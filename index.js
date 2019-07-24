@@ -1,6 +1,4 @@
-const express = require('express');
-
-const app = express();
+const { ApolloServer, gql } = require('apollo-server');
 
 const catsData = [
   {
@@ -30,4 +28,48 @@ const catsData = [
   }
 ];
 
-app.listen(6969);
+const typeDefs = gql`
+  type Query {
+    "Query for awesome cats"
+    cat(id: Int!): Cat
+    cats(color: String): [Cat]
+  }
+  type Mutation {
+    updateCatColor(id: Int!, newColor: String!): Cat
+  }
+  type Cat {
+    id: Int
+    name: String
+    color: String
+  }
+`;
+
+const getCat = ({ id }) => catsData.find(catData => catData.id === id);
+const getCats = ({ color }) =>
+  catsData.filter(catData => catData.color === color);
+const updateCatColor = ({ id, newColor }) =>
+  catsData
+    .filter(catData => catData.id === id)
+    .map(catData => ({
+      ...catData,
+      color: newColor
+    }))[0];
+
+const resolvers = {
+  Query: {
+    cat: getCat,
+    cats: getCats
+  },
+  Mutation: {
+    updateCatColor
+  }
+};
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers
+});
+
+server.listen().then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
+});
