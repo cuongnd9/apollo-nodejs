@@ -53,6 +53,21 @@ fragment catFields on Cat {
 }
 ```
 
+![query3](./images/query3.png)
+
+```
+query getCats($color:String) {
+  cats(color: $color) {
+    ...CatFields
+  }
+}
+
+fragment CatFields on Cat {
+	name
+  color
+}
+```
+
 2. Mutation
 
 ![mutation](./images/mutation.png)

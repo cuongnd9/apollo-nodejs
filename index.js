@@ -45,7 +45,7 @@ const typeDefs = gql`
 `;
 
 const getCat = (_, { id }) => catsData.find(catData => catData.id === id);
-const getCats = ({ color }) =>
+const getCats = (_, { color }) =>
     catsData.filter(catData => catData.color === color);
 const updateCatColor = (_, { id, newColor }) =>
   catsData
