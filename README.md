@@ -22,7 +22,7 @@ $ yarn start
 
 1. Query, aliases and fragments
 
-![query](./images/query.png)
+![query1](./images/query1.png)
 
 ```
 query getCat($catId: Int!) {
@@ -33,6 +33,8 @@ query getCat($catId: Int!) {
   }
 }
 ```
+
+![query2](./images/query2.png)
 
 ```
 query getCatWithFagments($catId1: Int!, $catId2: Int!) {
